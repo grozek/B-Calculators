@@ -83,6 +83,11 @@ public class BigFraction {
       this.num = new BigInteger (str.substring(0, str.indexOf("/")));
       this.denom = new BigInteger (str.substring(str.indexOf("/")+1, str.length()));
   }
+
+  public BigFraction(String str, Integer i){
+    this.num = new BigInteger (str);
+    this.denom = BigInteger.valueOf(i);
+  }
   // +---------+------------------------------------------------------
   // | Methods |
   // +---------+

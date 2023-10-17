@@ -9,7 +9,6 @@
  */
 
 
-
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.lang.String;
@@ -46,12 +45,28 @@ public class InteractiveCalculator {
                 saved = bf.store(charStoreHolder);
             } 
             /* if the input does not contain the string "STORE then evaluate the input as a fraction 
+             * if the value of output is equal to null, then the input must have been wrong so prints message
+             * to the user reminding about the proper format of input
              * if the denominator is equal to 1, then simplify it further and print nominator,
              * else just print the whole fraction
              */
-            else {
+            else{
                 saved = bf.evaluate(input);
-                if (saved.denom.equals(BigInteger.valueOf(1))){
+                if (saved == null){
+                    if (bf.errorMessage == 1){
+                        pen.println("Provide valid input that consists of alternating numerical values and expressions");
+                    }
+                    else if (bf.errorMessage == 2){
+                        pen.println("Provided two numbers/registers in a row. Ensure that your input consists of alternating numerical values and expressions");                    
+                    }
+                    else if (bf.errorMessage == 3){
+                        pen.println("Provided two operations in a row. Ensure that your input consists of alternating numerical values and expressions");
+                    }
+                    else {
+                        pen.println ("Unidentified error");
+                    }
+                }
+                else if(saved.denom.equals(BigInteger.valueOf(1))){
                     pen.println(saved.num);
                 }
                 else{
