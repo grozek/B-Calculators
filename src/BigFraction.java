@@ -6,9 +6,20 @@ import java.lang.String;
  * A simple implementation of Fractions.
  * 
  * @author Samuel A. Rebelsky
- * @author YOUR NAME HERE
  * @version 1.2 of August 2023
+ * 
+ * Edited by: Gabriela Roznawska
+ * Changes: addition of string-input constructor, subtract, multiply, divide, simplest, 
+ * and fractional methods.
+ * CSC-207
+ * October 16th 2023
+ * Mini-Project-2-Redo
+ * Acknowledgements:
+ * Extremely helpful prof. Rebelsky and the class mentors: Pom and Micah
+ * Online directions for this mini-project on prof. Rebelsky's website
+ * Java documentation
  */
+
 public class BigFraction {
   // +------------------+---------------------------------------------
   // | Design Decisions |
@@ -38,34 +49,36 @@ public class BigFraction {
 
   /**
    * Build a new fraction with numerator num and denominator denom.
-   * 
-   * Warning! Not yet stable.
+   * If the denominator is 0, then the fraction is null.
    */
   public BigFraction(BigInteger num, BigInteger denom) {
+    if(denom == BigInteger.valueOf(0)){
+      this.num = this.denom = null;
+    }
+    else{
     this.num = num;
     this.denom = denom;
+    }
   } // Fraction(BigInteger, BigInteger)
 
   /**
    * Build a new fraction with numerator num and denominator denom.
-   * 
-   * Warning! Not yet stable.
+   * If the denominator is 0, then the fraction is null.
    */
   public BigFraction(int num, int denom) {
+    if(denom == 0){
+      this.num = this.denom = null;
+    }
+    else{
     this.num = BigInteger.valueOf(num);
     this.denom = BigInteger.valueOf(denom);
+    }
   } // Fraction(int, int)
 
   /**
    * Build a new fraction by parsing a string.
    *
-   * Warning! Not yet implemented.
-   */
-  // public Fraction(String str) {
-  //   this.num = BigInteger.valueOf(2);
-  //   this.denom = BigInteger.valueOf(7);
-  // } // Fraction
-
+  */
   public BigFraction (String str){
       this.num = new BigInteger (str.substring(0, str.indexOf("/")));
       this.denom = new BigInteger (str.substring(str.indexOf("/")+1, str.length()));
@@ -153,33 +166,7 @@ public class BigFraction {
 
     return new BigFraction(resultNominator, resultDenominator);
   }
-  
-/* 
-  public BigFraction subtract(BigFraction first){
-    BigInteger x = BigInteger.valueOf(0);
-      if (first.num.equals(BigInteger.ZERO)){
-      throw new ArithmeticException("Cannot divide by zero.");
-       }
-    BigInteger firstD = first.denom; 
-    BigInteger secondD = this.denom;
-    BigInteger newD = firstD.gcd(secondD);
-    BigInteger firstN = first.num.multiply(newD.divide(firstD));
-    BigInteger secondN = this.num.multiply(newD.divide(secondD));
-    BigInteger newN; //secondN.subtract(firstN);
 
-    int n1 = firstN.intValue();
-    int n2 = secondN.intValue();
-    if (firstN.compareTo(secondN) > 0) {
-      newN = firstN.subtract(secondN);
-    }
-    else {
-      newN = secondN.subtract(firstN);
-    } 
-    
-    return new BigFraction(newN, newD);
-
-  }
-  */
   public BigFraction fractional (){
     BigInteger resultNumerator;
     resultNumerator = this.num.mod(this.denom);
@@ -187,7 +174,9 @@ public class BigFraction {
 
   }
 
-
+  /* given a BigFraction finds and returns its simplest form
+   * eq. given 2/4 returns 1/2
+   */
   public BigFraction simplest(){
     BigInteger resultN = this.num;
     BigInteger resultD = this.denom;
@@ -195,6 +184,7 @@ public class BigFraction {
 
     resultN = resultN.divide(gcd);
     resultD = resultD.divide(gcd);
+
     return new BigFraction (resultN, resultD);
-  }
+  } //simplest
 }

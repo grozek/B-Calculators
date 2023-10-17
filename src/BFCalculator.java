@@ -1,177 +1,149 @@
-// import java.io.PrintWriter;
+/* CSC-207
+ * October 16th 2023
+ * Mini-Project-2-Redo
+ * Gabriela Roznawska
+ * Acknowledgements:
+ * Extremely helpful prof. Rebelsky and the class mentors: Pom and Micah
+ * Online directions for this mini-project on prof. Rebelsky's website
+ * Java documentation
+ */
+
 import java.math.BigInteger;
-// import java.lang.Integer;
 import java.lang.String;
 
 
 public class BFCalculator {
 
     // fields
+
+    // stores value of the latest fraction
     BigFraction register;
+    // array that stores fractions in indexes of numericValues of letters
     BigFraction[] strRegister;
 
-    // costructor
+    // constructor
     public BFCalculator(BigFraction register) {
         this.strRegister = new BigFraction[26];
-        this.register = register; // the only constructor. not sure if there is a need for more
+        this.register = register; 
     }
-    /*
-     * public BFCalculator (Character x){ this.strRegister = new Character[26]; this.n = 0;
-     * this.strRegister[n] = x; this.tracked = x; }
+
+
+    //methods
+
+    /* pre: input equation form the user
+     * post: perform mathematical processes and output the fractional result
+     * 
+     * Takes in the input, compares it to various strings: expressions and numbers. 
+     * Then perform mathematical analysis based on the provided input. Evaluates the 
+     * command "STORE".
      */
-    // }
-
-
     public BigFraction evaluate(String exp) {
-        String[] result = exp.split(" "); // splitting input string into expressions
-        // char tempRegister = ' ';
+        String[] result = exp.split(" ");
         BigFraction output = null;
-        BigFraction temp1 = null; // temp1 will hold tempraily the numerator value
-        BigFraction temp2 = null; // temp2 will hold temoraily the denominator value
+        BigFraction temp1 = null; 
+        BigFraction temp2 = null;
         String expression = "";
-        int i = 0; // declare and initialize index
+        int i = 0; 
 
         // Repeat until we reach the end of the array
         while (i < result.length) { // until the end of string is reached
-            String str = result[i]; // temporary holder "str" takes in a value of first expression -
-                                    // most likely a fraction
-            char value = (str.charAt(0)); // value holds a uni value of the first character in str:
-                                          // most likely a number, nominator
-            int num = Character.getNumericValue(value); // num equals to the numeric value of the
-                                                        // first char in str. most likely a number
+            // temporary holder "str" takes in a value of first expression -
+            String str = result[i]; 
+            // value holds a uni value of the first character in str
+            char value = (str.charAt(0)); 
+            int num = Character.getNumericValue(value); 
 
-            if ((Character.getNumericValue('0') <= num)
-                    && (num <= Character.getNumericValue('9'))) { // if the string is number
-                if (temp1 == null) {
-                    temp1 = new BigFraction(str); // if the temp1 doesnt hold any value then assign
+            /* if the numerator is equal to 0 then make both nominator and denominator equal to 0
+             */
+            if(Character.getNumericValue('0') == num){
+                  if (temp1 == null) {
+                    temp1 = new BigFraction(BigInteger.valueOf(0), BigInteger.valueOf(0)); 
                 } else {
-                    temp2 = new BigFraction(str); // if temp1 holds a value then assign it
+                    temp2 = new BigFraction(BigInteger.valueOf(0), BigInteger.valueOf(0)); 
                 }
             }
+            //if the numericalValue of first index of input is a number, then either assign it as
+            //temp1 or temp2. Produces error if more than 2 numeric values are inputed in a row.
+            else if((Character.getNumericValue('1') <= num)
+                    && (num <= Character.getNumericValue('9'))) { 
+                if (temp1 == null) {
+                    temp1 = new BigFraction(str); 
+                } else {
+                    temp2 = new BigFraction(str); 
+                }
+            }
+            /*if the numericalValue of first index of input is a letter, then either assign it as
+            *temp1 or temp2. Produces error if more than 2 numeric values are inputed in a row.
+            */
             if ((value <= 'z') && (value >= 'a')) {
                 if (temp1 == null) {
-                    temp1 = this.strRegister[value - 'a']; // if the temp1 doesnt hold any value
-                                                           // then assign
+                    temp1 = this.strRegister[value - 'a'];                                  
                 } else {
-                    temp2 = this.strRegister[value - 'a']; // if temp1 holds a value then assign it
+                    temp2 = this.strRegister[value - 'a'];
                 }
             }
-            if ((value == ('/')) || (expression.equals("/"))) { // if the expression at examined
-                                                                // index is '/' or the previously
-                                                                // saved expression is a division
-                                                                // "/" string
+            /*if the numericalValue of first index of input is a '/' or it is already stored in an 
+            *"expresesion" variable, then if not both temp1 and temp2 are present: save '/' as an 
+            *"expression" variable. If both temp1 and temp2 are present then perform division, assign 
+            * the result of it to temp1 and clear temp2 and expression variable, so they are ready 
+            * for new input fractions and expressions.
+            */
+            if ((value == ('/')) || (expression.equals("/"))) {
                 if ((temp1 == null) || (temp2 == null)) {
-                    expression = str; // if there are no two saved fraction then save expression as
-                                      // "/"
+                    expression = str; 
                 } else {
-                    output = temp1.divide(temp2); // if there are two fractions then perform
-                                                  // division
-                    temp1 = output; // temp1 value is the result of the division
-                    temp2 = null; // initialising temp2 so its ready for new assignment
-                    expression = ""; // neutralising expression so it can take on new values
+                    output = temp1.divide(temp2); 
+                    temp1 = output; 
+                    temp2 = null; 
+                    expression = ""; 
                 }
             }
-
-            if ((value == ('+')) || (expression.equals("+"))) { // if the character is '+' or the
-                                                                // previously saved expression is
-                                                                // "+"
+            /*if the numericalValue of first index of input is a '+' or it is already stored in an 
+            *"expresesion" variable, then if not both temp1 and temp2 are present: save '+' as an 
+            *"expression" variable. If both temp1 and temp2 are present then perform addition, assign 
+            * the result of it to temp1 and clear temp2 and expression variable, so they are ready 
+            * for new input fractions and expressions.
+            */
+            if ((value == ('+')) || (expression.equals("+"))) { 
                 if ((temp1 == null) || (temp2 == null)) {
-                    expression = str; // if there are no two saved fraction then save expression as
-                                      // "+"
+                    expression = str; 
                 } else {
-                    output = temp1.add(temp2); // if there are two fractions then perform addition
-                    temp1 = output; // temp1 value is the result of addition
-                    temp2 = null; // initializing to zero temp2 so its ready for taking on new input
-                    expression = ""; // neutralising expression so it can take on new values
+                    output = temp1.add(temp2); 
+                    temp1 = output; 
+                    temp2 = null;
+                    expression = ""; 
                 }
             }
-
-            if ((value == ('-')) || (expression.equals("-"))) { // if the character is '+' or the
-                                                                // previously saved expression is
-                                                                // "+"
+            /*if the numericalValue of first index of input is a '-' or it is already stored in an 
+            *"expresesion" variable, then if not both temp1 and temp2 are present: save '-' as an 
+            *"expression" variable. If both temp1 and temp2 are present then perform subtraction, assign 
+            * the result of it to temp1 and clear temp2 and expression variable, so they are ready 
+            * for new input fractions and expressions.
+            */
+            if ((value == ('-')) || (expression.equals("-"))) { 
                 if ((temp1 == null) || (temp2 == null)) {
-                    expression = str; // if there are no two saved fraction then save expression as
-                                      // "+"
+                    expression = str; 
                 } else {
-                    output = temp1.subtract(temp2); // if there are two fractions then perform
-                                                    // addition
-                    temp1 = output; // temp1 value is the result of addition
-                    temp2 = null; // initializing to zero temp2 so its ready for taking on new input
-                    expression = ""; // neutralising expression so it can take on new values
+                    output = temp1.subtract(temp2);
+                    temp1 = output; 
+                    temp2 = null; 
+                    expression = "";
                 }
             }
-
-
             i++;
-
         }
+        //if the end of the array of strings (input) is reached, 
+        // then change it to simplest form and return
         output = output.simplest();
         this.register = output;
         return output;
-    }
+    } //evaluate
 
 
-
+    /* when called assigns a BigFraction value to an letter-ordered index in a array of fractions
+     */
     public BigFraction store(char reg) {
         this.strRegister[reg - 'a'] = this.register; // character name idintificator for number
-
-       return register;
-    }
-
-
-
-    /*
-     * if (result[i].equals("STORE")){ String temp = result[i+1]; tempRegister = temp.charAt(0);
-     * store(tempRegister); i++; }
-     */
-
-    // if (value == tempRegister){
-
-    // }
-
-    /*
-     * public BFCalculator evaluate (String exp){ String[]result = new String[26]; BigFraction
-     * temp1; BigFraction temp2; String expression; result = exp.split(" ");
-     * 
-     * for (int i=0; i<result.length; i++){ String str = result[i]; char value = (str.charAt(0));
-     * int num = Character.getNumericValue(value);
-     * 
-     * if ((97 <= num) && (num <= 122)){ if (temp1.num.equals(0)){ temp2 = new BigFraction
-     * (result[i]); } else { temp1 = new BigFraction (result[i]); } } else
-     * if(result[i].equals('/')){ if(result[i].equals("null")){ expression = result[i]; if
-     * ((!(temp1.equals("null"))) && (!(temp1.equals("null")))){ temp1.divide(temp2); } } }
-     */
-    // else{
-    // //error
-    // }
-
-
+        return register;
+    } //store
 }
-// }
-// }
-
-
-/*
- * public BFCalculator store (char register){ String nominator = this.num.toString(); String
- * denominator = this.denom.toString(); register = (char) this.num;
- * 
- * 
- * }
- */
-
-
-
-/*
- * public BFCalculator evaluate (String exp){ char temp; BigInteger num; BigInteger denom;
- * BigInteger output; for (int i=0; i <length(exp); i++){ temp = exp.charAt(i); if (temp == ('/')){
- * if (isWhitespace(exp.charAt(i-1))){ //im assuming that if the witespace is for nominator it is
- * also for the denominator num = BigInteger.valueOf(exp.charAt(i-2)); num =
- * BigInteger.valueOf(exp.charAt(i-2)); } else{ num = BigInteger.valueOf(exp.charAt(i-1)); denom =
- * BigInteger.valueOf(exp.charAt(i+1)); // output = divide(num, denom); } }//example dividing
- * method, same should be for all the other if statements if (temp == ('*')){ num =
- * BigInteger.valueOf(exp.charAt(i-1)); denom = BigInteger.valueOf(exp.charAt(i+1)); //output =
- * multiply(num, denom); } if (temp == ('+')){ num = BigInteger.valueOf(exp.charAt(i-1)); denom =
- * BigInteger.valueOf(exp.charAt(i+1)); //output = add(num, denom); } if (temp == ('-')){ num =
- * BigInteger.valueOf(exp.charAt(i-1)); denom = BigInteger.valueOf(exp.charAt(i+1)); //output =
- * subtract(num, denom); } //return new (this.num, this.denom);
- */
