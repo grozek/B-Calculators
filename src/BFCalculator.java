@@ -51,18 +51,19 @@ public class BFCalculator {
             char value = (str.charAt(0));
             int num = Character.getNumericValue(value);
 
-            if (result.length <= 1) {
-                this.errorMessage = 1;
-                return output;
-            }
+            if (str.equals("QUIT"))
+                if (result.length <= 1) {
+                    this.errorMessage = 1;
+                    return output;
+                }
 
             if ((expression != "") && ((value == '+') || (value == '*') || (value == '/'))) {
                 this.errorMessage = 3;
                 return output;
             }
 
-            if ((value == '-') && (result.length+1 < i)){
-                if (('0' <= result[i].charAt(1)) && ('9' >= result[i].charAt(1))){
+            if ((value == '-') && (result.length + 1 < i)) {
+                if (('0' <= result[i].charAt(1)) && ('9' >= result[i].charAt(1))) {
                     this.errorMessage = 3;
                     return output;
                 }
@@ -78,18 +79,14 @@ public class BFCalculator {
                     temp2 = new BigFraction(BigInteger.valueOf(0), BigInteger.valueOf(0));
                 }
             }
+
             /*
              * if the numericalValue of first index of input is a number, then check if it is a
              * natural number or a fraction. Assigns each of those cases appropiately - with the
-             * denominator for the natural number always being equal to 1. Produces error if more
-             * than 2 numeric values are inputed in a row.
+             * denominator for the natural number always being equal to 1.
              */
-
-
-            else if (((Character.getNumericValue('1') <= num)
-                    && (num <= Character.getNumericValue('9')))
-                    || (('-' == value) && ('0' <= result[i].charAt(1))
-                            && ('9' >= result[i].charAt(1)))) {
+            if (((Character.getNumericValue('1') <= num)
+                    && (num <= Character.getNumericValue('9'))))
                 if (str.contains("/")) {
                     if (temp1 == null) {
                         temp1 = new BigFraction(str);
@@ -103,7 +100,8 @@ public class BFCalculator {
                         temp2 = new BigFraction(str, 1);
                     }
                 }
-            }
+
+
             /*
              * if the numericalValue of first index of input is a letter, then either assign it as
              * temp1 or temp2. Produces error if more than 2 numeric values are inputed in a row.
