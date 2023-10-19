@@ -1,7 +1,10 @@
 /*
- * CSC-207 October 16th 2023 Mini-Project-2-Redo Gabriela Roznawska Acknowledgements: Extremely
- * helpful prof. Rebelsky and the class mentors: Pom and Micah Online directions for this
- * mini-project on prof. Rebelsky's website Java documentation
+ * CSC-207 October 16th 2023 
+ * Mini-Project-2-Redo Gabriela Roznawska 
+ * Acknowledgements: 
+ * Extremely helpful prof. Rebelsky and the class mentors: Pom and Micah 
+ * Online directions for thisbmini-project on prof. Rebelsky's website 
+ * Java documentation
  */
 
 import java.math.BigInteger;
