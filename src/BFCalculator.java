@@ -20,12 +20,14 @@ public class BFCalculator {
     // array that stores fractions in indexes of numericValues of letters
     BigFraction[] strRegister;
     Integer errorMessage;
+    Character singular;
 
     // constructor
     public BFCalculator(BigFraction register) {
         this.strRegister = new BigFraction[26];
         this.register = register;
         this.errorMessage = 0;
+        this.singular = ' ';
     }
 
 
@@ -54,12 +56,11 @@ public class BFCalculator {
             char value = (str.charAt(0));
             int num = Character.getNumericValue(value);
 
-            if (str.equals("QUIT"))
-                if (result.length <= 1) {
+            if (result.length <= 1) { 
                     this.errorMessage = 1;
+                    this.singular = value;
                     return output;
-                }
-
+            }
             if ((expression != "") && ((value == '+') || (value == '*') || (value == '/'))) {
                 this.errorMessage = 3;
                 return output;

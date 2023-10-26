@@ -41,9 +41,9 @@ public class QuickCalculator {
         saved = bfCalculator.evaluate(input);
         if (saved == null) {
           if (bfCalculator.errorMessage == 1) {
-            pen.println(
-                "Provide valid input that consists of alternating numerical values and expressions");
-          } else if (bfCalculator.errorMessage == 2) {
+            pen.println(bfCalculator.singular + " = " + bfCalculator.singular);
+          }
+             else if (bfCalculator.errorMessage == 2) {
             pen.println(
                 "Provided two numbers/registers in a row. Ensure that your input consists of alternating numerical values and expressions");
           } else if (bfCalculator.errorMessage == 3) {
