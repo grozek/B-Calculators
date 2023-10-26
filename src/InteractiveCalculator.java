@@ -54,8 +54,7 @@ public class InteractiveCalculator {
                 saved = bf.evaluate(input);
                 if (saved == null) {
                     if (bf.errorMessage == 1) {
-                        pen.println(
-                                "Provide valid input that consists of alternating numerical values and expressions");
+                        pen.println(bf.singular);
                     } else if (bf.errorMessage == 2) {
                         pen.println(
                                 "Provided two numbers/registers in a row. Ensure that your input consists of alternating numerical values and expressions");
