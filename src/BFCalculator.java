@@ -1,4 +1,9 @@
 /*
+ * BFCalculator
+ * 
+ * Performs calculations requested by the user that include fractions and 
+ * returns the outputs to the user
+ * 
  * CSC-207 October 16th 2023 
  * Mini-Project-2-Redo Gabriela Roznawska 
  * Acknowledgements: 
@@ -28,7 +33,7 @@ public class BFCalculator {
         this.register = register;
         this.errorMessage = 0;
         this.singular = ' ';
-    }
+    } //BFCalculator
 
 
     // methods
@@ -60,18 +65,18 @@ public class BFCalculator {
                     this.errorMessage = 1;
                     this.singular = value;
                     return output;
-            }
+            } // if
             if ((expression != "") && ((value == '+') || (value == '*') || (value == '/'))) {
                 this.errorMessage = 3;
                 return output;
-            }
+            } //if 
 
             if ((value == '-') && (result.length + 1 < i)) {
                 if (('0' <= result[i].charAt(1)) && ('9' >= result[i].charAt(1))) {
                     this.errorMessage = 3;
                     return output;
-                }
-            }
+                } // if
+            } // if
 
             /*
              * if the numerator is equal to 0 then make both nominator and denominator equal to 0
@@ -81,8 +86,8 @@ public class BFCalculator {
                     temp1 = new BigFraction(BigInteger.valueOf(0), BigInteger.valueOf(0));
                 } else {
                     temp2 = new BigFraction(BigInteger.valueOf(0), BigInteger.valueOf(0));
-                }
-            }
+                } //else
+            } //if
 
             /*
              * if the numericalValue of first index of input is a number, then check if it is a
@@ -96,14 +101,14 @@ public class BFCalculator {
                         temp1 = new BigFraction(str);
                     } else {
                         temp2 = new BigFraction(str);
-                    }
+                    } // else
                 } else {
                     if (temp1 == null) {
                         temp1 = new BigFraction(str, 1);
                     } else {
                         temp2 = new BigFraction(str, 1);
-                    }
-                }
+                    } //else
+                } // else
 
 
             /*
@@ -115,8 +120,8 @@ public class BFCalculator {
                     temp1 = this.strRegister[value - 'a'];
                 } else {
                     temp2 = this.strRegister[value - 'a'];
-                }
-            }
+                } // else
+            } // if
             /*
              * if the numericalValue of first index of input is a '/' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '/' as an
@@ -132,8 +137,8 @@ public class BFCalculator {
                     temp1 = output;
                     temp2 = null;
                     expression = "";
-                }
-            }
+                } // else
+            } // if 
             /*
              * if the numericalValue of first index of input is a '*' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '*' as an
@@ -149,8 +154,8 @@ public class BFCalculator {
                     temp1 = output;
                     temp2 = null;
                     expression = "";
-                }
-            }
+                } // else
+            } // if 
             /*
              * if the numericalValue of first index of input is a '+' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '+' as an
@@ -166,8 +171,8 @@ public class BFCalculator {
                     temp1 = output;
                     temp2 = null;
                     expression = "";
-                }
-            }
+                } // else
+            } // if
             /*
              * if the numericalValue of first index of input is a '-' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '-' as an
@@ -183,27 +188,27 @@ public class BFCalculator {
                     temp1 = output;
                     temp2 = null;
                     expression = "";
-                }
-            }
+                } // else
+            } // if
             i++;
-        }
+        } // while
         if ((temp1 != null) && (temp2 != null)) {
             this.errorMessage = 2;
             return output;
-        }
+        } // if
         // if the end of the array of strings (input) is reached,
         // then change it to simplest form and return
         output = output.simplest();
         this.register = output;
         return output;
-    } // evaluate
+    } // evaluate (String)
 
 
-    /*
+    /**
      * when called assigns a BigFraction value to an letter-ordered index in a array of fractions
      */
     public BigFraction store(char reg) {
         this.strRegister[reg - 'a'] = this.register; // character name idintificator for number
         return register;
-    } // store
-}
+    } // store (char)
+} // BFCalculator
