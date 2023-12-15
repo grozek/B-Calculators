@@ -1,6 +1,7 @@
 /*
  * CSC-207 October 16th 2023 
- * Mini-Project-2-Redo Gabriela Roznawska 
+ * Mini-Project-2-Redo 
+ * Gabriela Roznawska 
  * Acknowledgements: 
  * Extremely helpful prof. Rebelsky and the class mentors: Pom and Micah 
  * Online directions for thisbmini-project on prof. Rebelsky's website 
@@ -42,7 +43,7 @@ public class InteractiveCalculator {
             if (input.contains("STORE")) {
                 char charStoreHolder = input.charAt(input.length() - 1);
                 saved = bf.store(charStoreHolder);
-            }
+            } // if
             /*
              * if the input does not contain the string "STORE then evaluate the input as a fraction
              * if the value of output is equal to null, then the input must have been wrong so
@@ -63,16 +64,16 @@ public class InteractiveCalculator {
                                 "Provided two operations in a row. Ensure that your input consists of alternating numerical values and expressions");
                     } else {
                         pen.println("Unidentified error");
-                    }
+                    } // else
                 } else if (saved.denom.equals(BigInteger.valueOf(1))) {
                     pen.println(saved.num);
                 } else {
                     pen.println(saved);
-                }
-            }
+                } // else
+            } // else
             input = scans.nextLine();
-        }
+        } // while
         scans.close();
-    } // InteractiveCalculator
-}
+    } // main (String[])
+} // InteractiveCalculator
 

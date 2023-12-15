@@ -1,4 +1,4 @@
-/*
+/**
  * BFCalculator
  * 
  * Performs calculations requested by the user that include fractions and 
@@ -18,27 +18,34 @@ import java.lang.String;
 
 public class BFCalculator {
 
-    // fields
+    /**
+     * Fields
+     * register : stores value of the latest fraction
+     * strRegister : array that stores fractions in indexes of numericValues of letters
+     */
 
-    // stores value of the latest fraction
     BigFraction register;
-    // array that stores fractions in indexes of numericValues of letters
     BigFraction[] strRegister;
     Integer errorMessage;
     Character singular;
 
-    // constructor
+    /**
+     * Simple constructor
+     * @param register BigFraction
+     */
     public BFCalculator(BigFraction register) {
         this.strRegister = new BigFraction[26];
         this.register = register;
         this.errorMessage = 0;
         this.singular = ' ';
-    } //BFCalculator
+    } // BFCalculator
 
 
-    // methods
+    /**
+     * Methods
+     */
 
-    /*
+    /**
      * pre: input equation form the user post: perform mathematical processes and output the
      * fractional result
      * 
@@ -53,24 +60,20 @@ public class BFCalculator {
         String expression = "";
         int i = 0;
 
-        // Repeat until we reach the end of the array
-        while (i < result.length) { // until the end of string is reached
-            // temporary holder "str" takes in a value of first expression -
+        while (i < result.length) { 
             String str = result[i];
-            // value holds a uni value of the first character in str
             char value = (str.charAt(0));
             int num = Character.getNumericValue(value);
 
-            if (result.length <= 1) { 
-                    this.errorMessage = 1;
-                    this.singular = value;
-                    return output;
+            if (result.length <= 1) {
+                this.errorMessage = 1;
+                this.singular = value;
+                return output;
             } // if
             if ((expression != "") && ((value == '+') || (value == '*') || (value == '/'))) {
                 this.errorMessage = 3;
                 return output;
-            } //if 
-
+            } // if
             if ((value == '-') && (result.length + 1 < i)) {
                 if (('0' <= result[i].charAt(1)) && ('9' >= result[i].charAt(1))) {
                     this.errorMessage = 3;
@@ -78,7 +81,7 @@ public class BFCalculator {
                 } // if
             } // if
 
-            /*
+            /**
              * if the numerator is equal to 0 then make both nominator and denominator equal to 0
              */
             if (Character.getNumericValue('0') == num) {
@@ -86,10 +89,10 @@ public class BFCalculator {
                     temp1 = new BigFraction(BigInteger.valueOf(0), BigInteger.valueOf(0));
                 } else {
                     temp2 = new BigFraction(BigInteger.valueOf(0), BigInteger.valueOf(0));
-                } //else
-            } //if
+                } // else
+            } // if
 
-            /*
+            /**
              * if the numericalValue of first index of input is a number, then check if it is a
              * natural number or a fraction. Assigns each of those cases appropiately - with the
              * denominator for the natural number always being equal to 1.
@@ -107,11 +110,10 @@ public class BFCalculator {
                         temp1 = new BigFraction(str, 1);
                     } else {
                         temp2 = new BigFraction(str, 1);
-                    } //else
+                    } // else
                 } // else
 
-
-            /*
+            /**
              * if the numericalValue of first index of input is a letter, then either assign it as
              * temp1 or temp2. Produces error if more than 2 numeric values are inputed in a row.
              */
@@ -122,7 +124,8 @@ public class BFCalculator {
                     temp2 = this.strRegister[value - 'a'];
                 } // else
             } // if
-            /*
+
+            /**
              * if the numericalValue of first index of input is a '/' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '/' as an
              * "expression" variable. If both temp1 and temp2 are present then perform division,
@@ -138,8 +141,9 @@ public class BFCalculator {
                     temp2 = null;
                     expression = "";
                 } // else
-            } // if 
-            /*
+            } // if
+
+            /**
              * if the numericalValue of first index of input is a '*' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '*' as an
              * "expression" variable. If both temp1 and temp2 are present then perform
@@ -155,8 +159,9 @@ public class BFCalculator {
                     temp2 = null;
                     expression = "";
                 } // else
-            } // if 
-            /*
+            } // if
+
+            /**
              * if the numericalValue of first index of input is a '+' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '+' as an
              * "expression" variable. If both temp1 and temp2 are present then perform addition,
@@ -173,7 +178,8 @@ public class BFCalculator {
                     expression = "";
                 } // else
             } // if
-            /*
+            
+            /**
              * if the numericalValue of first index of input is a '-' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '-' as an
              * "expression" variable. If both temp1 and temp2 are present then perform subtraction,
@@ -196,8 +202,10 @@ public class BFCalculator {
             this.errorMessage = 2;
             return output;
         } // if
-        // if the end of the array of strings (input) is reached,
-        // then change it to simplest form and return
+        /**
+         * if the end of the array of strings (input) is reached, then change it to simplest form
+         * and return
+         */
         output = output.simplest();
         this.register = output;
         return output;

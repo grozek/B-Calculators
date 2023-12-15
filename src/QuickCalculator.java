@@ -1,4 +1,9 @@
-/*
+/**
+ * QuickCalculator
+ * 
+ * Performs calculations requested by the user that include fractions and 
+ * returns the outputs to the user
+ * 
  * CSC-207 October 16th 2023 
  * Mini-Project-2-Redo Gabriela Roznawska 
  * Acknowledgements: 
@@ -13,7 +18,7 @@ import java.util.Scanner;
 import java.lang.String;
 import java.math.BigInteger;
 
-/*
+/**
  * Takes in input as command-line-arguments that are strings (of mathematical equations and STORE
  * requests) Can store latest result of evaluation in a character (such as "a"), and then use this
  * character as a holder for the value Once all in-line arguments have been evaluated prints each
@@ -24,8 +29,7 @@ public class QuickCalculator {
     BigFraction saved = new BigFraction(1, 3);
     BFCalculator bfCalculator = new BFCalculator(saved);
     PrintWriter pen = new PrintWriter(System.out, true);
-
-    /*
+    /**
      * For every string provided in command-line-arguments perform evaluation of the input and act
      * accordingly: if the input contains the command STORE, then save the following character as a
      * holder for the latest evaluated number. If the input results in any error then print
@@ -42,8 +46,7 @@ public class QuickCalculator {
         if (saved == null) {
           if (bfCalculator.errorMessage == 1) {
             pen.println(bfCalculator.singular + " = " + bfCalculator.singular);
-          }
-             else if (bfCalculator.errorMessage == 2) {
+          } else if (bfCalculator.errorMessage == 2) {
             pen.println(
                 "Provided two numbers/registers in a row. Ensure that your input consists of alternating numerical values and expressions");
           } else if (bfCalculator.errorMessage == 3) {
@@ -51,15 +54,14 @@ public class QuickCalculator {
                 "Provided two operations in a row. Ensure that your input consists of alternating numerical values and expressions");
           } else {
             pen.println("Unidentified error");
-          }
+          } // else
         } else if (saved.denom.equals(BigInteger.valueOf(1))) {
           pen.println(input + " = " + saved.num);
         } else {
           pen.println(input + " = " + saved);
-        }
-      }
-    }
-
-  }
-}
+        } // else
+      } // else
+    } // for
+  } // main(String[])
+} // InteractiveCalculator class
 
