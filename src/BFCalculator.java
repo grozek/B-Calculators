@@ -178,7 +178,7 @@ public class BFCalculator {
                     expression = "";
                 } // else
             } // if
-            
+
             /**
              * if the numericalValue of first index of input is a '-' or it is already stored in an
              * "expresesion" variable, then if not both temp1 and temp2 are present: save '-' as an
